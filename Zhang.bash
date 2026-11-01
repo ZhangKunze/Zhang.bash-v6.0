@@ -3,7 +3,7 @@ runing_directory="$(cd "$(dirname "$0")" && pwd)"
 sub_bash='sub.bash'
 sub_path="$runing_directory/$sub_bash"
 if [ -f "$sub_path" ]; then
-if diff <(echo "cac6a4057aba1249dd8efe8a3bae9dbbdf05f91e6e3a69b6f3371d2ea7549598  -") <(cat "$sub_path" | sha256sum) > /dev/null; then
+if diff <(echo "31ccd1cfd53a4b116dd0f84a3d0094b82b47fd22d4731c7f91977863ce824645  -") <(cat "$sub_path" | sha256sum) > /dev/null; then
 chmod +x "$sub_path"
 source "$sub_path"
 else

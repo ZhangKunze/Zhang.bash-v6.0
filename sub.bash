@@ -75,33 +75,50 @@ esac
 done
 }
 sub4(){
-local target=$((RANDOM % 10 + 1))
-local attempts=5
-local guess
-echo -e "\033[96m🔮 我生成了一个 1 到 10 之间的数字。\033[0m"
-echo -e "\033[93m你只有 5 次机会，祝你好运。\033[0m"
-while [ $attempts -gt 0 ]; do
-echo -e "\n\033[95m━━━ 剩余次数: $attempts ━━━\033[0m"
-read -p "输入你的猜测: " guess
-if ! [[ "$guess" =~ ^[0-9]+$ ]]; then
-echo -e "\033[91m❌ 请输入有效的数字！\033[0m"
-continue
-fi
-if [ $guess -eq $target ]; then
-echo -e "\033[92m🎉 牛逼！就是 $target！\033[0m"
-return 0
-elif [ $guess -lt $target ]; then
-echo "太小了，往大点猜。"
-else
-echo "太大了，往小点猜。"
-fi
-((attempts--))
-if [ $attempts -eq 2 ]; then
-echo -e "\033[93m⚠️ 只剩 2 次了，你可想好了。\033[0m"
-elif [ $attempts -eq 1 ]; then
-echo -e "\033[91m⚠️ 最后一次机会了！别手抖！\033[0m"
-fi
-done
-echo -e "\n\033[91m💀 5 次全错。答案是: $target 。\033[0m"
-echo -e "\033[93m要不... 承认自己运气不好吧。\033[0m"
+    local max attempts diff_name
+    while true; do
+        echo -e "\e[95m请选择难度："
+        echo -e "  \e[92m[1] 简单（1-5，5 次机会）"
+        echo -e "  \e[93m[2] 普通（1-10，5 次机会）"
+        echo -e "  \e[96m[3] 困难（1-100，7 次机会）"
+        read -r -p "→ " diff_choice
+        case "$diff_choice" in
+            1) max=5;   attempts=5; diff_name="简单"; break ;;
+            2) max=10;  attempts=5; diff_name="普通"; break ;;
+            3) max=100; attempts=7; diff_name="困难"; break ;;
+            *) echo -e "\e[91m❌ 只能选 1 / 2 / 3，请重新选择。\e[0m" ;;
+        esac
+    done
+
+    local target=$((RANDOM % max + 1))
+    local guess used=0
+
+    echo -e "\n\033[96m🔮 我生成了一个 1 到 $max 之间的数字（难度：$diff_name）。\033[0m"
+    echo -e "\033[93m你只有 $attempts 次机会，祝你好运。\033[0m"
+
+    while [ $attempts -gt 0 ]; do
+        echo -e "\n\033[95m━━━ 剩余次数: $attempts ━━━\033[0m"
+        read -p "输入你的猜测: " guess
+        if ! [[ "$guess" =~ ^[0-9]+$ ]]; then
+            echo -e "\033[91m❌ 请输入有效的数字！\033[0m"
+            continue
+        fi
+        used=$((used + 1))
+        if [ "$guess" -eq "$target" ]; then
+            echo -e "\033[92m🎉 牛逼！就是 $target！你用了 $used 次。\033[0m"
+            return 0
+        elif [ "$guess" -lt "$target" ]; then
+            echo "太小了，往大点猜。"
+        else
+            echo "太大了，往小点猜。"
+        fi
+        attempts=$((attempts - 1))
+        if [ $attempts -eq 2 ]; then
+            echo -e "\033[93m⚠️ 只剩 2 次了，你可想好了。\033[0m"
+        elif [ $attempts -eq 1 ]; then
+            echo -e "\033[91m⚠️ 最后一次机会了！别手抖！\033[0m"
+        fi
+    done
+    echo -e "\n\033[91m💀 机会用完。答案是: $target 。\e[0m"
+    echo -e "\033[93m要不... 承认自己运气不好吧。\e[0m"
 }
