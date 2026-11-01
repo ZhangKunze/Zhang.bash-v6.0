@@ -1,4 +1,4 @@
-#/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 runing_directory="$(cd "$(dirname "$0")" && pwd)"
 sub_bash='sub.bash'
 sub_path="$runing_directory/$sub_bash"
