@@ -26,14 +26,14 @@ you_are_excited=(
 )
 export Zhang_bash_run=true
 case $1 in
--v) echo "本脚本是 Zhang.bash 的5.0版本"
+-v) echo "本脚本是 Zhang.bash 的6.0版本"
 if [ "$0" == "$BASH_SOURCE" ]; then
 exit 0
 else
 return 0
 fi
 ;;
---version) echo "本脚本是 Zhang.bash 的5.0版本"
+--version) echo "本脚本是 Zhang.bash 的6.0版本"
 if [[ "$0" == "$BASH_SOURCE" ]]; then
 exit 0
 else
@@ -49,7 +49,7 @@ fi
 ;;
 esac
 while true; do
-echo -e "\e[32m这是 Zhang.bash，Version：5.0"
+echo -e "\e[32m这是 Zhang.bash，Version：6.0"
 echo -e "\e[96m[1] 文件管理\e[0m"
 echo -e "\e[92m[2] Proot 专项\e[0m"
 echo -e "\e[93m[3] 软件管理\e[0m"
