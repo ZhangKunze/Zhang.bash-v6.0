@@ -48,6 +48,7 @@ return 0
 fi
 ;;
 esac
+echo -e "\e[91m⚠️ 警告：本脚本默认执行权限全开，支持直接 eval 执行。如果你手滑输入了 rm -rf /，请自行背诵『千错万错都不是我手残，是整个 IT 行业在针对我』并重装系统。\e[0m"
 while true; do
 echo -e "\e[32m这是 Zhang.bash，Version：6.0"
 echo -e "\e[96m[1] 文件管理\e[0m"
